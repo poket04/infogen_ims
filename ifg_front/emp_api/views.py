@@ -91,3 +91,20 @@ def search_ajax(request):
     logger.info(json.loads(r.text))
     # return JsonResponse(r.json())
     return JsonResponse(r.json(), safe=False)
+
+
+class Emp_api_signUpForm(generic.TemplateView): #app.py내 Class 호출.
+    def get(self, request, *args, **kwargs):
+
+        logger.info("Views Start")      #front에 찍힘.
+
+        template_name = 'emp/signUpForm.html'
+
+        r = requests.get('http://emp_api:5001/SignForm')
+        rr = {
+            "result": r.text
+        }
+
+        logger.info("Views End")
+
+        return render(request, template_name, rr)

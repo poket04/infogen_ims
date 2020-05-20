@@ -185,12 +185,18 @@ class Health(Resource):
         }
         return jsonify(retJson)
 
+class SignForm(Resource): #2020-05-20 이성 Views.py로 전달.
+    def get(self):
+        logger.info("app Start")
+        return "SignUp"
+
 #
 api.add_resource(Hello, '/hello')
 api.add_resource(Save, '/save')
 api.add_resource(Update, '/update')
 api.add_resource(Search, '/search')
 api.add_resource(Health, '/health')
+api.add_resource(SignForm, '/SignForm') #2020-05-20 이성 Views.py 에서 호출.
 
 
 if __name__ == "__main__":
