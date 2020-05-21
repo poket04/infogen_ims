@@ -93,6 +93,29 @@ def search_ajax(request):
     return JsonResponse(r.json(), safe=False)
 
 
+@csrf_exempt
+def insert_signUp_ajax(request):
+
+    param = json.loads(request.POST['param'])
+
+    datas = {
+        'id' : param['id'],
+        'password' : param['pw'],
+        'name' : param['name'],
+        'tel' : param['areaNo']+'-'+param['mdlNo']+'-'+param['lastNo'],
+        'zip' : param['startZipNo']+'-'+param['endZipNo'],
+        'addr' : param['baseAddr'] + ' ' + param['detlAddr']
+    }
+    logger.info('request.post : ' + request.POST['param'])
+    logger.info(datas)
+    #r = requests.post('http://emp_api:5000/save',data=json.dumps(datas))
+    r = requests.post('http://emp_api:5001/saveUserInfo', data=datas)       #app.py에 정의되어있음.
+    logger.info(r)
+    logger.info(r.text)
+    logger.info(r.json())
+    return JsonResponse(r.json())
+
+
 class Emp_api_signUpForm(generic.TemplateView): #app.py내 Class 호출.
     def get(self, request, *args, **kwargs):
 

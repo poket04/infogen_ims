@@ -1,22 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:origin/master" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="069bc5b9-482e-4fff-a242-76dbf771ee42" name="Default Changelist" comment="" />
+    <list default="true" id="069bc5b9-482e-4fff-a242-76dbf771ee42" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api_containers/emp/api/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_containers/emp/api/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api_containers/emp/api/docker-entrypoint.sh" beforeDir="false" afterPath="$PROJECT_DIR$/api_containers/emp/api/docker-entrypoint.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ifg_front/emp_api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/ifg_front/emp_api/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ifg_front/emp_api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ifg_front/emp_api/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ifg_front/templates/emp/signUpForm.html" beforeDir="false" afterPath="$PROJECT_DIR$/ifg_front/templates/emp/signUpForm.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1YkMKY19wNRnWeYVFkINL0M59hz" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/docker-compose.yml" />
-    <property name="settings.editor.selected.configurable" value="Docker" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/ifg_front/templates/emp" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\workspace\infogen_ims\ifg_front\templates\emp" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
@@ -38,18 +88,6 @@
       <method v="2" />
     </configuration>
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -63,30 +101,66 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="552" y="178" key="#Docker" timestamp="1583484473068">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="178" key="#Docker/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1583484473068" />
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1583484627793">
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589807997159">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1583484627793" />
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1589807997159" />
+    <state x="712" y="320" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1590072299519">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="712" y="320" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040/-1920.98.1920.1040@0.0.1920.1040" timestamp="1590072299519" />
     <state x="798" y="409" key="DockerComposeFileDialog" timestamp="1583484499738">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="798" y="409" key="DockerComposeFileDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1583484499738" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1583484498022">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1589983671691">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.98.1920.1040@0.0.1920.1040" timestamp="1589983671691" />
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1583484498022" />
-    <state x="461" y="162" key="SettingsEditor" timestamp="1583484442830">
+    <state x="461" y="162" key="SettingsEditor" timestamp="1589983421639">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="461" y="162" key="SettingsEditor/0.0.1920.1040/-1920.98.1920.1040@0.0.1920.1040" timestamp="1589983421639" />
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1583484442830" />
+    <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1589809107595" />
     <state x="657" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1583482088179">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="657" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1583482088179" />
+    <state x="413" y="109" width="945" height="804" key="find.popup" timestamp="1590073705480">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="413" y="109" width="945" height="804" key="find.popup/0.0.1920.1040/-1920.98.1920.1040@0.0.1920.1040" timestamp="1590073705480" />
   </component>
 </project>

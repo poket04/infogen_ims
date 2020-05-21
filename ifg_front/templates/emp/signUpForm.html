@@ -5,173 +5,22 @@
         <script type="text/javascript">
         $(document).ready(function(){
 
-            var firstGrid = $('[data-ax5grid="first-grid"]');
-
-            /* 행 삭제 버튼 */
-            $('#rowDelBtn').click(function(){
-                if( isEmpty(firstGrid.selectedDataIndexs[0].toString()) ){
-                    alert("선택된 행이 없습니다.");
-                    return false;
-                }
-
-                firstGrid.deleteRow(firstGrid.selectedDataIndexs[0]); //선택한 행 삭제
-            });
-
-            /* 저장 버튼 */
-            $('#saveBtn').click(function(){
-                console.log("UPDATE DATA");
-                console.log(firstGrid.getList("modified"));
-                console.log(firstGrid.getList("modified").length);
-                console.log("DELETE DATA");
-                console.log(firstGrid.getList("deleted"));
-                console.log(firstGrid.getList("deleted").length);
-
-                var paData = new Array();
-
-                var tObj;
-
-
-                if ( firstGrid.getList("modified").length > 0 ){
-                    for(var iIndex=0; iIndex<firstGrid.getList("modified").length; iIndex++){
-
-                        tObj = firstGrid.getList("modified")[iIndex];
-                        tObj.flag = "U";
-                        paData.push( tObj );
-
-                    }
-                }
-
-                if ( firstGrid.getList("deleted").length > 0 ){
-                    for(var iIndex=0; iIndex<firstGrid.getList("deleted").length; iIndex++){
-
-                        tObj = firstGrid.getList("deleted")[iIndex];
-                        tObj.flag = "D";
-                        paData.push( tObj );
-
-                    }
-                }
-                console.log("PARAM DATA");
-                console.log( paData );
-                console.log( paData.length );
-                if( paData.length == 0 ) {
-                    alert("수정/삭제된 데이터가 없습니다.");
-                    return false;
-                }
-
-                $.ajaxCall({data:paData} , {
-                    method : 'POST',
-                    url : '/emp/update_ajax/post',
-                    callbackFn : function(data){
-                        var html = '';
-                        html += '<dl class="row">';
-                        html += '<dt class="col-sm-3">Status</dt>';
-                        html += '<dd class="col-sm-9">' + data.status + '</dd>';
-                        html += '<dt class="col-sm-3">Msg</dt>';
-                        html += '<dd class="col-sm-9">' + data.msg + '</dd>';
-                        html += '</dl>';
-
-                        $('#ajaxUpdateResult').html(html);
-
-                        if(data.status=="200"){
-                            alert("정상적으로 처리되었습니다.");
-                        }else if(data.status=="500"){
-                            alert("비정상 종료되었습니다.");
-                        }
-                        $('#searchBtn').click();
-                    }
-                });
-            });
-
-
-            /* 조회 버튼 */
-            $('#searchBtn').click(function(){
-                $('#formSearchDiv').ajaxCall({
-                    method : 'GET',
-                    url : '/emp/search_ajax/get',
-                    callbackFn : function(data){
-                        var gridList = $.parseJSON(data); /* 그리드에 세팅할 데이터는 JSON 배열 형태 */
-
-                        var gridOptions = {
-                            columns: [              /* columns : 그리드 헤더 및 매핑 시킬 컬럼 및 컬럼 속성 설정 항목(필수) */
-                                {
-                                    key: "email",
-                                    label: "EMAIL",
-                                    width: 100,
-                                    styleClass: function () {       /* column style css class */
-                                        return "font-weight-bolder";
-                                    },
-                                    enableFilter: true,
-                                    align: "center",
-                                    editor: {type: "text"}          /* 컬럼값 수정 모드 시 표시할 타입. text는 input box */
-                                },
-                                {
-                                    key: "password",
-                                    label: "PASSWORD",
-                                    width: 80,
-                                    align: "center",
-                                    editor: {type: "password"}
-                                },
-                                {
-                                    key: "addr",
-                                    label: "ADDRESS",
-                                    align: "left",
-                                    editor: {type: "text"}
-                                },
-                                {
-                                    key: "sex",
-                                    label: "SEX",
-                                    editor: {
-                                        type: "select",             /* 수정시 셀렉트 박스 */
-                                        config: {
-                                            options: [              /* 셀렉트 박스에서 보여줄 데이터 */
-                                                {CD: "M", NM: "M: Man"},
-                                                {CD: "F", NM: "F: Female"}
-                                            ],
-                                            columnKeys: {
-                                                optionValue: "CD", optionText: "NM"
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
-                        };
-                        firstGrid = $('[data-ax5grid="first-grid"]');
-                        firstGrid = firstGrid.initGrid(gridOptions);
-                        firstGrid.setData(gridList);
-                    }
-                });
-            });
-
             /* 등록 버튼 */
-            $('#submitBtn').click(function(){
+            $('#signUp').click(function(){
+                alert("등록버튼");
 
                 /* validate  st */
-                if( isNullChk("inputEmail4") ) return false;
-                if( isNullChk("inputPassword4") ) return false;
-                if( isNullChk("inputAddress") ) return false;
-                if( isNullChk("inputAddress2") ) return false;
-                if( isNullChk("inputCity") ) return false;
+                if( isNullChk("inputId") ) return false;
+                if( isNullChk("inputPw") ) return false;
+                if( isNullChk("inputCheckPw") ) return false;
+                if( isNullChk("inputName") ) return false;
+                if( isNullChk("inputAreaNo") ) return false;
 
-                if( isEmpty($('#inputState').val()) || $('#inputState').val() == "Choose..." ){
-                    alert("국가를 선택하세요.");
-                    $('#inputState').focus();
-                    return false;
-                }
-
-                if( isNullChk("inputZip") ) return false;
-                if( isNullChk("gridCheck1") ) return false;
-                if( !$('#gridCheck1').is(":checked") && !$('#gridCheck2').is(":checked") ){
-                    alert("성별을 선택하세요.");
-                    $('#gridCheck1').focus();
-                    return false;
-                }
-
-                alert("valid 종료");
                 /* validate  ed */
 
                 $('#formDiv').ajaxCall({
                     method : 'POST',
-                    url : '/emp/insert_ajax/post',
+                    url : '/emp/insert_signUp_ajax/post',               /*  urls.py  에 정의되어있음. */
                     callbackFn : function(data){
                         var html = '';
                         html += '<dl class="row">';
@@ -218,8 +67,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <center>
-                    <div class="alert alert-info" role="alert" style="'position':'center';">
-                        Screen Name : {{ result }}
+                    <div class="alert alert-info" role="alert" style="padding:20 0 0 0">
+                        <h3>
+                            <b>회원가입</b>
+                        </h3>
                     </div>
                 </center>
                 <div class="alert alert-info" role="alert">
@@ -251,25 +102,25 @@
                                     <option value="2">032</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-2">
                                 <label for="inputMdlNo">　</label>
-                                <input type="number" class="form-control" id="inputMdlNo" name="mdlNo" maxlength="5">
+                                <input type="text" class="form-control" id="inputMdlNo" name="mdlNo" maxlength="5">
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-2">
                                 <label for="inputLastNo">　</label>
-                                <input type="number" class="form-control" id="inputLastNo" name="lastNo" maxlength="5">
+                                <input type="text" class="form-control" id="inputLastNo" name="lastNo" maxlength="5">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-2">
                                 <label for="inputStartZipNo">우편번호</label>
-                                <input type="number" class="form-control" id="inputStartZipNo" name="startZipNo" maxlength="5">
+                                <input type="text" class="form-control" id="inputStartZipNo" name="startZipNo" maxlength="5">
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="inputEndZipNo">　</label>
-                                <input type="number" class="form-control" id="inputEndZipNo" name="endZipNo" maxlength="5">
+                                <input type="text" class="form-control" id="inputEndZipNo" name="endZipNo" maxlength="5">
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-2">
                                 <label for="openAddrApi">　</label>
                                 <button class="btn btn-primary form-control" id="openAddrApi">우편번호검색</button>
                             </div>
@@ -291,6 +142,11 @@
                         <button class="btn btn-primary center" id="cncl">가입취소</button>
                     </center>
                 </div>
+
+
+
+            </div>
+            <div id="ajaxResult" style="margin-top:50px;">
 
             </div>
         </div>

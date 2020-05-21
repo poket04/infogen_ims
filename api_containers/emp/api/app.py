@@ -190,6 +190,48 @@ class SignForm(Resource): #2020-05-20 이성 Views.py로 전달.
         logger.info("app Start")
         return "SignUp"
 
+
+class SaveUserInfo(Resource):
+    def post(self):
+        # Get posted data from request
+        logging.debug("SaveUserInfo start")
+
+
+        # get data
+        id = request.form['id']
+        password = request.form['password']
+        name = request.form['name']
+        tel = request.form['tel']
+        zip = request.form['zip']
+        addr = request.form['addr']
+
+
+        logging.debug('--------------------------------------')
+        logging.debug('id : ' + id)
+        logging.debug('password : ' + password)
+        logging.debug('name : ' + name)
+        logging.debug('tel : ' + tel)
+        logging.debug('zip : ' + zip)
+        logging.debug('addr : ' + addr)
+        logging.debug('--------------------------------------')
+
+        # logging.debug(existsEmail(email))
+        foxTestDb.insert({
+            "id": id,
+            "password": password,
+            "name": name,
+            "tel": tel,
+            "zip": zip,
+            "addr": addr
+
+        })
+        retJson = {
+            "status": 200,
+            "msg": "Data has been saved successfully"
+        }
+
+        return jsonify(retJson)
+
 #
 api.add_resource(Hello, '/hello')
 api.add_resource(Save, '/save')
@@ -197,6 +239,7 @@ api.add_resource(Update, '/update')
 api.add_resource(Search, '/search')
 api.add_resource(Health, '/health')
 api.add_resource(SignForm, '/SignForm') #2020-05-20 이성 Views.py 에서 호출.
+api.add_resource(SaveUserInfo, '/saveUserInfo') #2020-05-20 이성 Views.py 에서 호출.
 
 
 if __name__ == "__main__":
