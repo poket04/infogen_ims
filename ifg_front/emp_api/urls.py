@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^update_ajax/post', views.update_ajax, name='update_ajax'),
     url(r'^search_ajax/get', views.search_ajax, name='search_ajax'),
 
+    url(r'^search_email_ajax/get', views.search_email_ajax, name='search_email_ajax'),
     url(r'^signUpForm/', views.Emp_api_signUpForm.as_view(), name='emp_signUpForm'),    #url(URL/Method/명칭)
     url(r'^insert_signUp_ajax/post', views.insert_signUp_ajax, name='insert_signUp_ajax'),   # views.py  에 정의되어있음.
 

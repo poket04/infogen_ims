@@ -99,7 +99,7 @@ def insert_signUp_ajax(request):
     param = json.loads(request.POST['param'])
 
     datas = {
-        'id' : param['id'],
+        'id' : param['id']+'@infogen.co.kr',
         'password' : param['pw'],
         'name' : param['name'],
         'tel' : param['areaNo']+'-'+param['mdlNo']+'-'+param['lastNo'],
@@ -131,3 +131,19 @@ class Emp_api_signUpForm(generic.TemplateView): #app.py내 Class 호출.
         logger.info("Views End")
 
         return render(request, template_name, rr)
+
+def search_email_ajax(request):
+    logger.info('ViewPy Start')
+    #param = json.loads(request.GET['id'])
+    datas = {
+        'id' : request.GET['id']
+    }
+    logger.info(datas)
+    r = requests.get('http://emp_api:5001/searchEmail', params=datas)
+    logger.info(r)
+    logger.info(r.text)
+    logger.info("----------------")
+    logger.info(r.json())
+    logger.info(json.loads(r.text))
+    # return JsonResponse(r.json())
+    return JsonResponse(r.json(), safe=False)

@@ -63,6 +63,32 @@
             }
         }
 
+        /* 사용가능한 Email인지 확인한다. */
+        function chkAvlEmail() {
+
+            var idReg = /[^\w]/
+            var id = $('#inputId').val();
+
+            console.log("idReg.test(id) :" + idReg.test(id));
+
+            if(!isEmpty(id)) {
+                if(idReg.test(id) || id.length > 15) {
+                    console.log("ID는 영문 또는 숫자만 사용가능하며, 15자를 초과하지 않은 조합을 사용바랍니다.");
+                } else {
+                    console.log("성공");
+                    $.ajax({
+                        method : 'GET',
+                        url : '/emp/search_email_ajax/get',
+                        data : {id : id},
+                        success:function(data){
+                            JSONdata = data;
+                            console.log('JSONdata : '+JSONdata)
+                        }
+                    })
+                }
+            }
+        }
+
     </script>
         <div class="row">
             <div class="col-sm-12">
@@ -78,7 +104,7 @@
                          {% csrf_token %}
                         <div class="form-group">
                             <label for="inputId">아이디</label>
-                            <input type="text" class="form-control" id="inputId" name="id" placeholder="@infogen.co.kr" maxlength="70">
+                            <input type="text" class="form-control" id="inputId" name="id" placeholder="@infogen.co.kr" maxlength="70" onfocusout="chkAvlEmail()">
                         </div>
                         <div class="form-group">
                             <label for="inputPw">비밀번호</label>

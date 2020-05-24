@@ -232,11 +232,44 @@ class SaveUserInfo(Resource):
 
         return jsonify(retJson)
 
+
+class SearchEmail(Resource):
+    def get(self):
+        # Get posted data from request
+        logging.debug("SearchEmail start")
+
+        # get data
+        id = request.args.get('id')
+
+        logging.debug('---------------SEARCH---------------')
+        logging.debug('id : ' + id)
+        logging.debug('------------------------------------')
+
+        if id is None or id == "":
+            logging.debug("is None")
+            result = foxTestDb.find()
+        else:
+            logging.debug("is not null")
+            result = foxTestDb.find({
+                "id": id
+            })
+
+        logging.debug('---------------RESULT---------------')
+        logging.debug(result)
+        logging.debug('------------------------------------')
+        array = list(result) #결과를 리스트로
+        logging.debug(array)
+        logging.debug(dumps(array)) #리스트파일은 dumps
+        logging.debug(jsonify(dumps(array))) #dumps한 파일은 jsonify
+
+        return jsonify(dumps(array))
+
 #
 api.add_resource(Hello, '/hello')
 api.add_resource(Save, '/save')
 api.add_resource(Update, '/update')
 api.add_resource(Search, '/search')
+api.add_resource(SearchEmail, '/searchEmail')
 api.add_resource(Health, '/health')
 api.add_resource(SignForm, '/SignForm') #2020-05-20 이성 Views.py 에서 호출.
 api.add_resource(SaveUserInfo, '/saveUserInfo') #2020-05-20 이성 Views.py 에서 호출.
