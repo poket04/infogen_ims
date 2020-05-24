@@ -2,19 +2,57 @@
 
 {% block content %}
     <div class="container">
+        <style>
+            .pass {
+                border-color : rgb(40, 167, 69)
+            }
+        </style>
         <script type="text/javascript">
         $(document).ready(function(){
 
             /* 등록 버튼 */
             $('#signUp').click(function(){
-                alert("등록버튼");
 
                 /* validate  st */
-                if( isNullChk("inputId") ) return false;
-                if( isNullChk("inputPw") ) return false;
-                if( isNullChk("inputCheckPw") ) return false;
-                if( isNullChk("inputName") ) return false;
-                if( isNullChk("inputAreaNo") ) return false;
+                var id          = $('#inputId');
+                var pw          = $('#inputPw');
+                var chkPw       = $('#inputCheckPw');
+                var name        = $('#inputName');
+                var lastNo      = $('#inputLastNo');
+                var baseAddr    = $('#inputBaseAddr');
+
+                if(!id.hasClass('is-valid')) {
+                    id.focus();
+                    return;
+                }
+
+                if(!pw.hasClass('is-valid')) {
+                    pw.focus();
+                    return;
+                }
+
+                if(!chkPw.hasClass('is-valid')) {
+                    chkPw.focus();
+                    return;
+                }
+
+                if(!name.hasClass('is-valid')) {
+                    name.focus();
+                    return;
+                }
+
+                if(!lastNo.hasClass('is-valid')) {
+                    lastNo.focus();
+                    return;
+                }
+
+                if(!baseAddr.hasClass('is-valid')) {
+                    alert('API연동전까지 강제 입력');
+                    $('#inputStartZipNo').val('833')
+                    $('#inputEndZipNo').val('155')
+                    $('#inputBaseAddr').val('서울특별시 구로구 경인로 35다길 14-15')
+                }
+
 
                 /* validate  ed */
 
@@ -31,15 +69,12 @@
                         html += '</dl>';
 
                         $('#ajaxResult').html(html);
+                        location.href = '{% url 'emp_api:success_signUp' %}'
                     }
                 });
             });
         });
 
-        function fncNm(name,value){
-            $("input[type=checkbox][name="+name+"]").prop("checked",false);
-            $("input[name=chk][value="+value+"]").prop("checked",true);
-        }
 
         /**
         * 문자열이 빈 문자열인지 체크하여 결과값을 리턴한다.
@@ -52,30 +87,23 @@
                 return false;
         }
 
-        function isNullChk( objId ) {
-            var objVal = document.getElementById( objId ).value;
-            if( typeof objVal == "undefined" || objVal == null || objVal == "" ){
-                 alert($("label[for="+objId+"]").text()+"을(를) 입력하세요.");
-                 document.getElementById( objId ).focus();
-                 return true;
-            }else{
-                return false;
-            }
-        }
-
         /* 사용가능한 Email인지 확인한다. */
         function chkAvlEmail() {
 
             var idReg = /[^\w]/
             var id = $('#inputId').val();
 
-            console.log("idReg.test(id) :" + idReg.test(id));
-
+            /* 값이 있는 경우에만 Validation Check.. */
             if(!isEmpty(id)) {
+
+                /* 특수문자가 포함되거나, 15자를 초과한 경우. */
                 if(idReg.test(id) || id.length > 15) {
-                    console.log("ID는 영문 또는 숫자만 사용가능하며, 15자를 초과하지 않은 조합을 사용바랍니다.");
+                    chkInputVal($('#inputId'),'invalid')
+                    showGuideMessage($('#idFdb'),'ID는 영문 또는 숫자만 사용가능하며, 15자를 초과하지 않은 조합을 사용바랍니다.')
+
                 } else {
-                    console.log("성공");
+
+                    /* 입력된 ID값이 기존에 등록되어 있는지 확인. */
                     $.ajax({
                         method : 'GET',
                         url : '/emp/search_email_ajax/get',
@@ -83,77 +111,317 @@
                         success:function(data){
                             JSONdata = data;
                             console.log('JSONdata : '+JSONdata)
+
+                            /* 비어있는 경우 등록가능. */
+                            if(JSONdata == '[]') {
+                                chkInputVal($('#inputId'),'valid');
+                                showGuideMessage($('#idFdb'),null);
+
+                            /* 기존에 등록 된 값이 있는 경우 등록불가.. */
+                            } else {
+                                chkInputVal($('#inputId'),'invalid');
+                                showGuideMessage($('#idFdb'),'이미 사용중인 ID입니다.')
+                            }
+
                         }
                     })
                 }
+            } else {
+                chkInputVal($('#inputId'),'default');
+                showGuideMessage($('#idFdb'),null);
             }
+        }
+
+
+        /* Validate Css처리. */
+        function chkInputVal(obj,jobType) {
+
+            if(jobType=='valid') {
+                obj.removeClass('is-invalid');
+                obj.addClass('is-valid');
+
+            } else if (jobType=='invalid') {
+                obj.removeClass('is-valid');
+                obj.addClass('is-invalid');
+
+            } else if (isEmpty(jobType) || jobType == 'default') {
+                obj.removeClass('is-valid');
+                obj.removeClass('is-invalid');
+            }
+        }
+
+        /* guide Msg처리. */
+        function showGuideMessage(obj,msg) {
+
+            if(isEmpty(msg)) {
+                obj.hide();
+            } else {
+                obj.html(msg);
+                obj.show("");
+            }
+
+        }
+
+        /* Password 유효성 검사 */
+        function chkPwd(obj){
+            var pw      = $('#inputPw');
+            var chkPw   = $('#inputCheckPw');
+            var pwFdb   = $('#pwFdb');
+            var chkPwFdb= $('#chkPwFdb');
+            var chkSpace= /[ \t]/;
+
+            /* 비밀번호 */
+            if(obj=='pw') {
+
+                /* 비밀번호 재확인 값이 있는경우 현재값과 비교. */
+                if(!isEmpty(chkPw.val())) {
+
+                    /* 같은 경우. */
+                    if(pw.val() == chkPw.val()) {
+
+                        if(pw.val().length < 4 || pw.val().length > 16 || chkSpace.test(pw.val())) {
+                            showGuideMessage(pwFdb,'비밀번호는 공백이아닌 문자로 4자 이상 16자 이하여야 합니다.');
+                            chkInputVal(pw,'invalid');
+
+                        } else {
+                            showGuideMessage(pwFdb,null);
+                            showGuideMessage(chkPwFdb,null);
+                            chkInputVal(pw,'valid');
+                            chkInputVal(chkPw,'valid');
+                        }
+
+                    /* 다른 경우. */
+                    } else {
+                        showGuideMessage(pwFdb,'두 비밀번호가 다릅니다.');
+                        showGuideMessage(chkPwFdb,'두 비밀번호가 다릅니다.');
+                        chkInputVal(pw,'invalid');
+                        chkInputVal(chkPw,'invalid');
+                    }
+
+                /* 비밀번호 재확인 값이 없는 경우 */
+                } else {
+
+                    /* 유효성 검사.*/
+                    if(!isEmpty(pw.val())) {
+
+                        if(pw.val().length < 4 || pw.val().length > 16 || chkSpace.test(pw.val())) {
+                            showGuideMessage(pwFdb,'비밀번호는 공백이아닌 문자로 4자 이상 16자 이하여야 합니다.');
+                            chkInputVal(pw,'invalid');
+
+                        } else {
+                            showGuideMessage(pwFdb,null);
+                            chkInputVal(pw,'valid');
+                        }
+
+                    /* 비밀번호 값이 없는 경우. */
+                    } else {
+                        showGuideMessage(pwFdb,null);
+                        showGuideMessage(chkPwFdb,null);
+                        chkInputVal(pw,'default');
+                        chkInputVal(chkPw,'default');
+                    }
+
+                }
+
+            /* 비밀번호 재확인 */
+            } else if(obj=='chkPw') {
+
+                /* 비밀번호 재확인 영역이 비어있는 경우 */
+                if (isEmpty(chkPw.val())){
+                    showGuideMessage(pwFdb,null);
+                    showGuideMessage(chkPwFdb,null);
+                    chkInputVal(pw,'default');
+                    chkInputVal(chkPw,'default');
+
+                /* 비밀번호 영역이 비어있는 경우 */
+                } else if(isEmpty(pw.val())) {
+                    showGuideMessage(chkPwFdb,'비밀번호를 모두 입력 바랍니다.');
+                    chkInputVal(pw,'invalid');
+                    chkInputVal(chkPw,'invalid');
+
+                /* 비밀번호 재확인 영역 값이 있는 경우 */
+                } else {
+
+                    /* 두 비밀번호가 다른 경우. */
+                    if(pw.val() != chkPw.val()) {
+                        showGuideMessage(chkPwFdb,'두 비밀번호가 다릅니다.');
+                        showGuideMessage(pwFdb,'두 비밀번호가 다릅니다.');
+                        chkInputVal(pw,'invalid');
+                        chkInputVal(chkPw,'invalid');
+
+                    /* 두 비밀번호가 같은 경우. */
+                    } else {
+
+                        /* 유효성 검사. */
+                        if(pw.val().length < 4 || pw.val().length > 16 || chkSpace.test(pw.val())) {
+                            showGuideMessage(pwFdb,'비밀번호는 공백이아닌 문자로 4자 이상 16자 이하여야 합니다.');
+                            chkInputVal(pw,'invalid');
+                            chkInputVal(chkPw,'default');
+                            showGuideMessage(chkPwFdb,null);
+
+                        } else {
+                            showGuideMessage(pwFdb,null);
+                            showGuideMessage(chkPwFdb,null);
+                            chkInputVal(pw,'valid');
+                            chkInputVal(chkPw,'valid');
+                        }
+                    }
+                }
+
+
+            }
+        }
+
+
+        /* name 검사 */
+        function chkName(){
+            var name      = $('#inputName');
+
+            if(isEmpty(name.val())) {
+                chkInputVal(name,'default');
+            } else {
+                chkInputVal(name,'valid');
+            }
+
+        }
+
+        /* 연락처 검사 */
+        function chkTel(){
+            var telFdb      = $('#telFdb');
+            var areaNo      = $('#inputAreaNo');
+            var mdlNo       = $('#inputMdlNo');
+            var lastNo      = $('#inputLastNo');
+            var chkStr      = /[0-9]/;
+
+
+            if (isEmpty(mdlNo.val()) && isEmpty(lastNo.val())) {
+                showGuideMessage(telFdb,null);
+                chkInputVal(mdlNo,'default');
+                chkInputVal(lastNo,'default');
+
+            } else if(isEmpty(mdlNo.val())) {
+                chkInputVal(mdlNo,'default');
+                areaNo.removeClass('pass');
+                mdlNo.removeClass('pass');
+
+            } else if (isEmpty(lastNo.val())){
+                chkInputVal(lastNo,'default');
+                areaNo.removeClass('pass');
+                mdlNo.removeClass('pass');
+
+            } else {
+                if(mdlNo.val().length > 4 || mdlNo.val().length < 3 || !chkStr.test(mdlNo.val()) ) {
+                    chkInputVal(mdlNo,'invalid');
+                    chkInputVal(lastNo,'default');
+                    areaNo.removeClass('pass');
+                    mdlNo.removeClass('pass');
+                    showGuideMessage(telFdb,'전화번호 형식이 올바르지 않습니다.');
+                } else if ( lastNo.val().length != 4 || !chkStr.test(lastNo.val()) ) {
+                    chkInputVal(mdlNo,'invalid');
+                    chkInputVal(lastNo,'invalid');
+                    areaNo.removeClass('pass');
+                    showGuideMessage(telFdb,'전화번호 형식이 올바르지 않습니다.');
+                } else {
+                    chkInputVal(mdlNo,'default');
+                    chkInputVal(lastNo,'valid');
+                    showGuideMessage(telFdb,null);
+                    mdlNo.addClass('pass');
+                    areaNo.addClass('pass');
+                }
+            }
+
+        }
+
+        function callPop() {
+            alert('주소검색 API연동하기.')
         }
 
     </script>
         <div class="row">
             <div class="col-sm-12">
                 <center>
-                    <div class="alert alert-info" role="alert" style="padding:20 0 0 0">
+                    <div class="alert" role="alert" style="padding:20 0 0 0">
                         <h3>
                             <b>회원가입</b>
                         </h3>
                     </div>
                 </center>
-                <div class="alert alert-info" role="alert">
-                    <div id="formDiv">
+                <div class="alert" role="alert">
+                    <div id="formDiv" class="needs-validation">
                          {% csrf_token %}
                         <div class="form-group">
                             <label for="inputId">아이디</label>
                             <input type="text" class="form-control" id="inputId" name="id" placeholder="@infogen.co.kr" maxlength="70" onfocusout="chkAvlEmail()">
+                            <div id="idFdb"  class="invalid-feedback" style="width: 100%"></div>
                         </div>
                         <div class="form-group">
                             <label for="inputPw">비밀번호</label>
-                            <input type="password" class="form-control" id="inputPw" name="pw" maxlength="20">
+                            <input type="password" class="form-control" id="inputPw" name="pw" maxlength="20" onfocusout="chkPwd('pw')">
+                            <div id="pwFdb"  class="invalid-feedback" style="width: 100%"></div>
                         </div>
                         <div class="form-group">
                             <label for="inputCheckPw">비밀번호 재확인</label>
-                            <input type="password" class="form-control" id="inputCheckPw" name="checkPw" maxlength="20">
+                            <input type="password" class="form-control" id="inputCheckPw" name="checkPw" maxlength="20" onfocusout="chkPwd('chkPw')">
+                            <div id="chkPwFdb"  class="invalid-feedback" style="width: 100%"></div>
                         </div>
                         <div class="form-group">
                             <label for="inputName">이름</label>
-                            <input type="text" class="form-control" id="inputName" placeholder="홍길동" name="name" maxlength="20">
+                            <input type="text" class="form-control" id="inputName" placeholder="홍길동" name="name" maxlength="20" onfocusout="chkName()">
+                            <div id="nameFdb"  class="invalid-feedback" style="width: 100%"></div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-2">
                                 <label for="inputAreaNo">연락처</label>
-                                <select id="inputAreaNo" class="form-control" name="areaNo">
-                                    <option selected>없음</option>
-                                    <option value="1">02</option>
-                                    <option value="2">031</option>
-                                    <option value="2">032</option>
+                                <select id="inputAreaNo" class="form-control" name="areaNo" onfocusout="chkTel()">
+                                    <option value="010" selected>010</option>
+                                    <option value="02">02</option>
+                                    <option value="031">031</option>
+                                    <option value="032">032</option>
+                                    <option value="033">033</option>
+                                    <option value="041">041</option>
+                                    <option value="042">042</option>
+                                    <option value="043">043</option>
+                                    <option value="044">044</option>
+                                    <option value="051">051</option>
+                                    <option value="052">052</option>
+                                    <option value="053">053</option>
+                                    <option value="054">054</option>
+                                    <option value="061">061</option>
+                                    <option value="062">062</option>
+                                    <option value="063">063</option>
+                                    <option value="064">064</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="inputMdlNo">　</label>
-                                <input type="text" class="form-control" id="inputMdlNo" name="mdlNo" maxlength="5">
+                                <input type="text" class="form-control" id="inputMdlNo" name="mdlNo" maxlength="5" onfocusout="chkTel()">
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="inputLastNo">　</label>
-                                <input type="text" class="form-control" id="inputLastNo" name="lastNo" maxlength="5">
+                                <input type="text" class="form-control" id="inputLastNo" name="lastNo" maxlength="5" onfocusout="chkTel()">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label for="inputLastNo">　</label>
+                                <div id="telFdb"  class="invalid-feedback" style="width: 100%"></div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-2">
                                 <label for="inputStartZipNo">우편번호</label>
-                                <input type="text" class="form-control" id="inputStartZipNo" name="startZipNo" maxlength="5">
+                                <input type="text" class="form-control" id="inputStartZipNo" name="startZipNo" maxlength="5" readonly>
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="inputEndZipNo">　</label>
-                                <input type="text" class="form-control" id="inputEndZipNo" name="endZipNo" maxlength="5">
+                                <input type="text" class="form-control" id="inputEndZipNo" name="endZipNo" maxlength="5" readonly>
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="openAddrApi">　</label>
-                                <button class="btn btn-primary form-control" id="openAddrApi">우편번호검색</button>
+                                <button class="btn btn-primary form-control" id="openAddrApi" onclick="callPop()">우편번호검색</button>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputBaseAddr">기본주소</label>
-                            <input type="text" class="form-control" id="inputBaseAddr" name="baseAddr" maxlength="100">
+                            <input type="text" class="form-control" id="inputBaseAddr" name="baseAddr" maxlength="100" readonly>
                         </div>
                         <div class="form-group">
                             <label for="inputDetlAddr">상세주소</label>

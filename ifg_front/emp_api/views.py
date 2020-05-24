@@ -136,7 +136,7 @@ def search_email_ajax(request):
     logger.info('ViewPy Start')
     #param = json.loads(request.GET['id'])
     datas = {
-        'id' : request.GET['id']
+        'id' : request.GET['id']+'@infogen.co.kr'
     }
     logger.info(datas)
     r = requests.get('http://emp_api:5001/searchEmail', params=datas)
@@ -147,3 +147,15 @@ def search_email_ajax(request):
     logger.info(json.loads(r.text))
     # return JsonResponse(r.json())
     return JsonResponse(r.json(), safe=False)
+
+
+class Emp_api_successSignUp(generic.TemplateView):
+    def get(self, request, *args, **kwargs):
+        template_name = 'emp/successSignUp.html'
+        logger.info('Emp_api_successSignUp start')
+
+        rr = {
+            "result": "OK"
+        }
+
+        return render(request, template_name, rr)

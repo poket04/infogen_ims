@@ -27,9 +27,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="069bc5b9-482e-4fff-a242-76dbf771ee42" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ifg_front/templates/emp/successSignUp.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api_containers/prj/api/docker-entrypoint.sh" beforeDir="false" afterPath="$PROJECT_DIR$/api_containers/prj/api/docker-entrypoint.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ifg_front/docker-entrypoint.sh" beforeDir="false" afterPath="$PROJECT_DIR$/ifg_front/docker-entrypoint.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ifg_front/emp_api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/ifg_front/emp_api/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ifg_front/emp_api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ifg_front/emp_api/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ifg_front/templates/emp/signUpForm.html" beforeDir="false" afterPath="$PROJECT_DIR$/ifg_front/templates/emp/signUpForm.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +60,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/ifg_front/templates/emp" />
-    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -144,20 +147,20 @@
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.98.1920.1040@0.0.1920.1040" timestamp="1589983671691" />
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1583484498022" />
-    <state x="461" y="162" key="SettingsEditor" timestamp="1589983421639">
+    <state x="461" y="162" key="SettingsEditor" timestamp="1590326812462">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="461" y="162" key="SettingsEditor/0.0.1920.1040/-1920.98.1920.1040@0.0.1920.1040" timestamp="1589983421639" />
+    <state x="461" y="162" key="SettingsEditor/0.0.1920.1040/-1920.98.1920.1040@0.0.1920.1040" timestamp="1590326812462" />
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1583484442830" />
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1589809107595" />
     <state x="657" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1583482088179">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="657" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1583482088179" />
-    <state x="413" y="109" width="945" height="804" key="find.popup" timestamp="1590316013647">
+    <state x="413" y="109" width="945" height="804" key="find.popup" timestamp="1590328912614">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="413" y="109" width="945" height="804" key="find.popup/0.0.1920.1040/-1920.98.1920.1040@0.0.1920.1040" timestamp="1590073705480" />
+    <state x="413" y="109" width="945" height="804" key="find.popup/0.0.1920.1040/-1920.98.1920.1040@0.0.1920.1040" timestamp="1590328912614" />
     <state x="413" y="109" width="945" height="804" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1590316013647" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1590316352291">
       <screen x="0" y="0" width="1920" height="1040" />
